@@ -1,0 +1,9 @@
+{
+  "name": "pseudo-chrome-build-tools",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Windows executable resource editing for Pseudo-Chrome packages",
+  "dependencies": {
+    "resedit": "3.1.0"
+  }
+}

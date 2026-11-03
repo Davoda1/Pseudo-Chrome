@@ -1,0 +1,155 @@
+name: Validate and release
+
+on:
+  push:
+    branches: [master]
+    tags: ['v*']
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+    inputs:
+      extended_windows_ui:
+        description: Run Windows desktop geometry, popup and permission UI suites
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
+
+env:
+  ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+
+jobs:
+  checks:
+    name: Source and dependency checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '26.13.0'
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12'
+      - run: npm ci --ignore-scripts
+      - run: npm ci --ignore-scripts --prefix scripts/build-tools
+      - run: npm run check
+      - run: python -m unittest discover -s scripts/ci -p 'test_*.py'
+      - run: node --check scripts/ci/run-tests.cjs
+      - run: npm audit --audit-level=high
+      - run: npm audit --audit-level=high --prefix scripts/build-tools
+
+  linux:
+    name: Linux packaged runtime tests
+    needs: checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '26.13.0'
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12'
+      - name: Install build and Electron system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential pkg-config autoconf bison re2c musl-tools \
+            gcc-mingw-w64-x86-64-posix dpkg-dev gnupg cabextract xz-utils \
+            libxml2-dev libsqlite3-dev libssl-dev libcurl4-openssl-dev libonig-dev \
+            libsodium-dev libzip-dev zlib1g-dev libbz2-dev libgmp-dev libxslt1-dev \
+            libicu-dev libpq-dev libpng-dev libjpeg-dev libwebp-dev libfreetype-dev \
+            libnss3 libatk1.0-0t64 libatk-bridge2.0-0t64 libcups2t64 libdrm2 libxkbcommon0 \
+            libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 libasound2t64 libgtk-3-0t64
+      - run: npm ci --ignore-scripts
+      - run: npm ci --ignore-scripts --prefix scripts/build-tools
+      - name: Fetch verified Electron and Node distributions
+        run: python scripts/fetch-core-runtimes.py --cache "$RUNNER_TEMP/pseudo-build/downloads" --stage "$RUNNER_TEMP/pseudo-build"
+      - name: Build and verify nginx
+        run: python scripts/fetch-nginx.py --work-dir "$RUNNER_TEMP/pseudo-build/nginx-work" --output "$RUNNER_TEMP/pseudo-build/runtimes"
+      - name: Build and verify PHP
+        run: python scripts/fetch-php.py --cache "$RUNNER_TEMP/pseudo-build/php-downloads" --work "$RUNNER_TEMP/pseudo-build/php-work" --output "$RUNNER_TEMP/pseudo-build/runtimes" --jobs 4
+      - name: Build Windows process supervisor
+        run: python scripts/build-process-runner.py --out "$RUNNER_TEMP/pseudo-build/runtimes/win/process-runner.exe"
+      - name: Generate standalone preview
+        run: node scripts/build-preview.cjs
+      - name: Validate standalone preview message boundaries
+        run: |
+          npx --no-install playwright install --with-deps chromium
+          node tests/preview-messages.cjs
+      - name: Package all eight deliverables
+        run: python scripts/package.py --stage "$RUNNER_TEMP/pseudo-build" --out "$RUNNER_TEMP/pseudo-deliverables" --phase release
+      - name: Verify packages and extract Linux app
+        run: python scripts/ci/verify-release.py --directory "$RUNNER_TEMP/pseudo-deliverables" --extract linux --destination "$RUNNER_TEMP/Pseudo Chrome Linux"
+      - name: Run unit, real-runtime, and native Electron suites
+        run: node scripts/ci/run-tests.cjs --package "$RUNNER_TEMP/Pseudo Chrome Linux"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: release-files
+          path: ${{ runner.temp }}/pseudo-deliverables/*
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 7
+
+  windows:
+    name: Windows packaged runtime tests
+    needs: linux
+    runs-on: windows-2025
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '26.13.0'
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12'
+      - run: npm ci --ignore-scripts
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: release-files
+          path: ${{ runner.temp }}/pseudo-deliverables
+      - name: Verify packages and extract Windows app
+        run: python scripts/ci/verify-release.py --directory "$env:RUNNER_TEMP/pseudo-deliverables" --skip-deb --extract windows --destination "$env:RUNNER_TEMP/Pseudo Chrome Windows"
+      - name: Run unit, real-runtime, and native Electron suites
+        env:
+          PSEUDO_CHROME_EXTENDED_WINDOWS_UI: ${{ inputs.extended_windows_ui && '1' || '0' }}
+        run: node scripts/ci/run-tests.cjs --package "$env:RUNNER_TEMP/Pseudo Chrome Windows"
+
+  publish:
+    name: Publish verified tag release
+    if: startsWith(github.ref, 'refs/tags/v') && github.event_name == 'push'
+    needs: [checks, linux, windows]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: release-files
+          path: ${{ runner.temp }}/pseudo-deliverables
+      - name: Publish only a complete verified release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/ci/publish-release.py --directory "$RUNNER_TEMP/pseudo-deliverables" --notes RELEASE_NOTES.md

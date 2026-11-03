@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Starting Pseudo-Chrome</title><link rel="stylesheet" href="splash.css">
+</head>
+<body>
+  <main class="splash">
+    <div class="window-controls"><button id="minimize" aria-label="Minimize" title="Minimize"><svg viewBox="0 0 18 18"><path d="M2 9h14"/></svg></button><button id="close" aria-label="Close" title="Close"><svg viewBox="0 0 18 18"><path d="m2 2 14 14M16 2 2 16"/></svg></button></div>
+    <h1 id="message" role="status" aria-live="polite">Starting Pseudo-Chrome…</h1>
+    <div id="progress" class="progress" role="progressbar" aria-label="Starting Pseudo-Chrome"><span></span></div>
+    <img class="logo" src="../assets/icon.svg" alt="">
+  </main>
+  <script src="splash.js"></script>
+</body>
+</html>

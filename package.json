@@ -1,0 +1,38 @@
+{
+  "name": "pseudo-chrome",
+  "productName": "Pseudo-Chrome",
+  "version": "1.0.0",
+  "description": "A local website demonstration desktop application",
+  "private": true,
+  "main": "app/main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test tests/*.test.cjs",
+    "test:electron": "node tests/electron-smoke.cjs",
+    "check": "node --check app/main.cjs && node --check app/preload.cjs && node --check app/ui/renderer.js",
+    "test:popups": "node tests/electron-popups.cjs",
+    "test:permissions": "node tests/electron-permissions.cjs",
+    "test:storage": "node tests/electron-storage.cjs",
+    "test:devtools": "node tests/electron-devtools.cjs",
+    "test:favicons": "node tests/electron-favicons.cjs",
+    "test:navigation": "node tests/electron-navigation.cjs",
+    "test:launch": "node tests/electron-launch.cjs"
+  },
+  "devDependencies": {
+    "electron": "45.2.1",
+    "playwright": "1.62.1"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "license": "AGPL-3.0-only",
+  "author": "davoda1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Davoda1/Pseudo-Chrome.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Davoda1/Pseudo-Chrome/issues"
+  },
+  "homepage": "https://github.com/Davoda1/Pseudo-Chrome#readme"
+}

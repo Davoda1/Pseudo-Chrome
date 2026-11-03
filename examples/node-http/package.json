@@ -1,0 +1,7 @@
+{
+  "name": "pseudo-chrome-node-example",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A dependency-free local HTTP example",
+  "scripts": { "start": "node server.cjs" }
+}

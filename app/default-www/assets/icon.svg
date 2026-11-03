@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <clipPath id="chrome-ring" clipPathUnits="userSpaceOnUse">
+      <path clip-rule="evenodd" d="M256 0a256 256 0 1 1 0 512a256 256 0 1 1 0-512Z M256 128a128 128 0 1 1 0 256a128 128 0 1 1 0-256Z"/>
+    </clipPath>
+    <filter id="chrome-inner-depth" x="-32" y="-32" width="576" height="576" filterUnits="userSpaceOnUse" primitiveUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="5.5" result="soft-alpha"/>
+      <feOffset in="soft-alpha" dx="-3" dy="-5" result="shadow-offset"/>
+      <feComposite in="SourceAlpha" in2="shadow-offset" operator="out" result="shadow-mask"/>
+      <feFlood flood-color="#000000" flood-opacity="0.30" result="shadow-color"/>
+      <feComposite in="shadow-color" in2="shadow-mask" operator="in" result="inner-shadow"/>
+      <feComposite in="inner-shadow" in2="SourceGraphic" operator="atop" result="shaded"/>
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="highlight-alpha"/>
+      <feOffset in="highlight-alpha" dx="2" dy="3" result="highlight-offset"/>
+      <feComposite in="SourceAlpha" in2="highlight-offset" operator="out" result="highlight-mask"/>
+      <feFlood flood-color="#FFFFFF" flood-opacity="0.16" result="highlight-color"/>
+      <feComposite in="highlight-color" in2="highlight-mask" operator="in" result="inner-highlight"/>
+      <feComposite in="inner-highlight" in2="shaded" operator="atop"/>
+    </filter>
+    <filter id="chrome-white-recess" x="-32" y="-32" width="576" height="576" filterUnits="userSpaceOnUse" primitiveUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3.2" result="recess-soft-alpha"/>
+      <feOffset in="recess-soft-alpha" dx="2.5" dy="3.5" result="recess-offset"/>
+      <feComposite in="SourceAlpha" in2="recess-offset" operator="out" result="recess-mask"/>
+      <feFlood flood-color="#000000" flood-opacity="0.28" result="recess-color"/>
+      <feComposite in="recess-color" in2="recess-mask" operator="in" result="recess-shadow"/>
+      <feComposite in="recess-shadow" in2="SourceGraphic" operator="atop"/>
+    </filter>
+  </defs>
+  <circle cx="256" cy="256" r="130" fill="#FFFFFF"/>
+  <path fill="#FFFFFF" fill-rule="evenodd" filter="url(#chrome-white-recess)" d="M256 128a128 128 0 1 1 0 256a128 128 0 1 1 0-256Z M256 154.7a101.3 101.3 0 1 1 0 202.6a101.3 101.3 0 1 1 0-202.6Z"/>
+  <g filter="url(#chrome-inner-depth)">
+    <g clip-path="url(#chrome-ring)">
+      <path fill="#FFF200" d="M-32-32H544V544H-32Z"/>
+      <path fill="#FF0000" d="M256 128H544V-32H-64V544H237.524791L366.851252 320L256 256Z"/>
+      <path fill="#00FF05" stroke="#00FF05" stroke-width="1" stroke-linejoin="round" d="M-58.078346-32L145.148748 320L256 256L366.851252 320L237.524791 544H-64V-32Z"/>
+    </g>
+    <circle cx="256" cy="256" r="101.3" fill="#091DFF"/>
+  </g>
+</svg>

@@ -1,0 +1,79 @@
+:root {
+  color-scheme: dark;
+  --bg: #1f1f1f;
+  --text: #ffffff;
+  --accent: #a8c7fa;
+  --track: #444746;
+  --border: #292a2b;
+  --yellow-glow: #fbbc0499;
+  --red-glow: #ef66664d;
+  --violet-glow: #a48bdc66;
+  --blue-glow: #72bfd461;
+  --green-glow: #19a66b80;
+}
+:root[data-theme=light] {
+  color-scheme: light;
+  --bg: #ffffff;
+  --text: #000000;
+  --accent: #0157de;
+  --track: #e1e3e1;
+  --border: #c4c5c6;
+  --yellow-glow: #ffb96566;
+  --red-glow: #f28b823b;
+  --violet-glow: #b79ce64d;
+  --blue-glow: #76a9bc3d;
+  --green-glow: #1880384d;
+}
+* { box-sizing: border-box; }
+html, body {
+  width: 100%; height: 100%; margin: 0; overflow: hidden;
+  background: transparent; font-family: 'Segoe UI', Arial, sans-serif; user-select: none;
+}
+/* 693 × 349 DIP corresponds to the 866 × 436 reference at 125% scaling. */
+.splash {
+  width: 100%; height: 100%; position: relative; border-radius: 13px;
+  background: var(--bg); color: var(--text); overflow: hidden;
+  border: 1px solid var(--border); -webkit-app-region: drag;
+}
+.splash::before {
+  content: ''; position: absolute; inset: -12px; pointer-events: none;
+  background:
+    radial-gradient(ellipse 85px 195px at 0 100%, var(--yellow-glow), transparent 90%),
+    radial-gradient(ellipse 210px 43px at 34% calc(100% - 1px), var(--red-glow), transparent 95%),
+    radial-gradient(ellipse 190px 46px at 68% 100%, var(--violet-glow), transparent 95%),
+    radial-gradient(ellipse 155px 42px at 86% calc(100% - 2px), var(--blue-glow), transparent 95%),
+    radial-gradient(ellipse 72px 167px at calc(100% - 3px) calc(100% + 3px), var(--green-glow), transparent 95%);
+  filter: blur(8px);
+}
+.window-controls {
+  position: absolute; top: 12.3px; right: 13.8px; display: flex;
+  gap: 18px; align-items: center; z-index: 1;
+}
+.window-controls button {
+  width: 26px; height: 27px; display: grid; place-items: center; padding: 0;
+  border: 0; border-radius: 4px; background: transparent; color: var(--accent);
+  -webkit-app-region: no-drag; cursor: pointer;
+}
+.window-controls button:hover { background: #8882; }
+.window-controls button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.window-controls svg { height: 16px; width: 16px; stroke: currentColor; stroke-width: 2.3; fill: none; }
+h1 {
+  position: absolute; top: 101px; left: 25px; right: 25px; margin: 0;
+  text-align: center; font-size: 24px; font-weight: 400; line-height: 36px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.progress {
+  position: absolute; top: 190px; left: 47px; right: 47px; height: 8px;
+  background: var(--track); border-radius: 8px; overflow: hidden;
+}
+.progress span {
+  position: absolute; inset: 0 auto 0 0; width: 20%; border-radius: 8px;
+  background: var(--accent); animation: progress 2.2s ease-in-out infinite alternate;
+}
+.logo { position: absolute; top: 240px; left: calc(50% - 22px); width: 44px; height: 44px; }
+.progress.finished span { width: 100%; animation: none; }
+.progress.error span { animation: none; left: 40%; background: #f28b82; }
+@keyframes progress { from { transform: translateX(0); } to { transform: translateX(400%); } }
+@media (prefers-reduced-motion: reduce) {
+  .progress:not(.finished) span { animation: none; left: 40%; }
+}

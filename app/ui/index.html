@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: http: https:; connect-src 'none'; media-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Pseudo-Chrome</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<svg class="sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="m12 5-7 7 7 7M5 12h15"/></symbol>
+  <symbol id="i-forward" viewBox="0 0 24 24"><path d="m12 5 7 7-7 7M19 12H4"/></symbol>
+  <symbol id="i-reload" viewBox="0 0 24 24"><path d="M20 8a8 8 0 1 0 0 8M20 3v6h-6"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-person" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="9" r="3"/><path d="M5.5 18c1.5-4 11.5-4 13 0"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M3 7h3m6 0h9M3 17h9m6 0h3"/><circle cx="9" cy="7" r="3"/><circle cx="15" cy="17" r="3"/></symbol>
+  <symbol id="i-microphone" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M6 10v2a6 6 0 0 0 12 0v-2M12 18v4"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><rect x="3" y="5" width="12" height="14" rx="1"/><path d="m15 10 6-4v12l-6-4"/></symbol>
+  <symbol id="i-notifications" viewBox="0 0 24 24"><path d="M5 17h14l-2-3V9a5 5 0 0 0-10 0v5ZM12 2v2M10 21h4"/></symbol>
+  <symbol id="i-geolocation" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></symbol>
+  <symbol id="i-clipboard" viewBox="0 0 24 24"><path d="M8 5H4v16h16V5h-4"/><rect x="8" y="2" width="8" height="5" rx="1"/></symbol>
+  <symbol id="i-storage" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></symbol>
+  <symbol id="i-pointer" viewBox="0 0 24 24"><path d="m5 3 14 9-6 1-3 6Z"/></symbol>
+  <symbol id="i-keyboard" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M6 9h.01M10 9h.01M14 9h.01M18 9h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M7 16h10"/></symbol>
+  <symbol id="i-computer" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="13" rx="1"/><path d="M12 16v5M7 21h10"/></symbol>
+  <symbol id="i-cookie" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-9-9c0 4 3 5 5 5 0 2 2 4 4 4Z"/><path d="M7 10h.01M11 7h.01M7 16h.01M14 14h.01M13 19h.01"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24"><path d="M13 3h8v8M21 3 10 14M9 3H3v18h18v-6"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></symbol>
+  <symbol id="i-paint" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18h1a2.5 2.5 0 0 0 1.7-4.3c-.8-.8-.2-2.2.9-2.2H18A3 3 0 0 0 21 12a9 9 0 0 0-9-9Z"/><circle cx="7.5" cy="10" r=".7"/><circle cx="10.5" cy="6.8" r=".7"/><circle cx="15.1" cy="7.4" r=".7"/><circle cx="7.6" cy="15" r=".7"/></symbol>
+  <symbol id="i-power" viewBox="0 0 24 24"><path d="M12 3v9M7 5a9 9 0 1 0 10 0"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 6h7l2 2h9v11H3Z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+  <symbol id="i-tab" viewBox="0 0 24 24"><path d="M4 5h16v14H4Z"/><path d="M13 5v5h7"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+  <symbol id="i-fullscreen" viewBox="0 0 24 24"><path d="M8 4H4v4m12-4h4v4M4 16v4h4m12-4v4h-4"/></symbol>
+  <symbol id="i-print" viewBox="0 0 24 24"><path d="M7 8V3h10v5M7 17H4V9h16v8h-3M7 14h10v7H7Z"/><path d="M17 11h.01"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="m7 7-5 5 5 5m10-10 5 5-5 5M14 4l-4 16"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 6h16M9 6V3h6v3M6 6l1 15h10l1-15M10 10v7m4-7v7"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><path d="m10 3-.6 2.3-2 .9-2.1-.7-2 3.5 1.5 1.6v2.5L3.3 15l2 3.5 2.1-.7 2 .9L10 21h4l.6-2.3 2-.9 2.1.7 2-3.5-1.5-1.9v-2.5L20.7 9l-2-3.5-2.1.7-2-.9L14 3Z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="m4 16 12-12 4 4L8 20H4Zm10-10 4 4"/></symbol>
+  <symbol id="i-exit" viewBox="0 0 24 24"><path d="M11 4H4v16h7M8 12h13m-5-5 5 5-5 5"/></symbol>
+  <symbol id="i-warning" viewBox="0 0 24 24"><path d="m12 3 10 18H2Z"/><path d="M12 9v5M12 17h.01"/></symbol>
+</defs></svg>
+
+<header class="chrome" aria-label="Browser controls">
+  <div class="titlebar">
+    <button id="tab-search" class="tab-search" title="Search tabs (Ctrl+Shift+A)" aria-label="Search tabs" aria-haspopup="dialog" aria-controls="tab-search-panel" aria-expanded="false"><svg><use href="#i-down"/></svg></button>
+    <div id="tabs" class="tabs" role="tablist" aria-label="Open tabs"></div>
+    <button id="new-tab" class="new-tab icon-button" title="New tab (Ctrl+T)" aria-label="New tab"><svg><use href="#i-plus"/></svg></button>
+    <div class="titlebar-drag"></div>
+    <div class="window-controls">
+      <button id="minimize" title="Minimize" aria-label="Minimize"><svg viewBox="0 0 12 12"><path d="M1 6h10"/></svg></button>
+      <button id="maximize" title="Maximize" aria-label="Maximize"><svg viewBox="0 0 12 12" id="maximize-icon"><rect x="1.5" y="1.5" width="9" height="9"/></svg></button>
+      <button id="close-window" title="Close" aria-label="Close window"><svg viewBox="0 0 12 12"><path d="m1 1 10 10M11 1 1 11"/></svg></button>
+    </div>
+  </div>
+  <div class="toolbar">
+    <button id="back" class="icon-button" title="Back (Alt+Left)" aria-label="Back" disabled><svg><use href="#i-back"/></svg></button>
+    <button id="forward" class="icon-button" title="Forward (Alt+Right)" aria-label="Forward" disabled><svg><use href="#i-forward"/></svg></button>
+    <button id="reload" class="icon-button" title="Reload (Ctrl+R)" aria-label="Reload"><svg><use id="reload-symbol" href="#i-reload"/></svg></button>
+    <form id="address-form" class="address" role="search" autocomplete="off">
+      <button id="site-info" type="button" class="site-symbol" title="View site information" aria-label="View site information" aria-haspopup="dialog" aria-controls="site-panel" aria-expanded="false" disabled><svg aria-hidden="true"><use id="site-symbol-use" href="#i-sliders"/></svg><span id="permission-chip-label" hidden></span></button>
+      <input id="address-input" type="text" aria-label="Address" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="Enter a local website address">
+      <button id="zoom-indicator" type="button" title="Reset zoom" hidden>100%</button>
+    </form>
+    <button id="profile" class="icon-button profile-button" title="Local demo profile" aria-label="Local demo profile" aria-haspopup="dialog" aria-controls="profile-panel" aria-expanded="false"><svg><use href="#i-person"/></svg></button>
+    <button id="menu" class="icon-button menu-button" title="Customize and control Pseudo-Chrome" aria-label="Customize and control Pseudo-Chrome" aria-haspopup="menu" aria-controls="main-menu" aria-expanded="false"><svg><use href="#i-more"/></svg></button>
+  </div>
+</header>
+
+<main id="internal-content" class="internal-content">
+  <section id="welcome-page" class="welcome-page" aria-labelledby="welcome-title">
+    <div class="welcome-inner">
+      <img src="../assets/icon.svg" alt="" class="welcome-logo">
+      <h1 id="welcome-title">Pseudo-Chrome</h1>
+      <p class="welcome-subtitle">Your website, locally presented.</p>
+      <div id="welcome-status" class="welcome-status"><span class="status-dot"></span><span id="welcome-status-text">Preparing your website…</span></div>
+      <p id="welcome-description" class="welcome-description">Place your deployment-ready website in the www folder. Pseudo-Chrome starts the local hosting processes for you.</p>
+      <div class="welcome-actions"><button id="open-website" class="button primary">Open website</button><button class="button" data-command="openWww"><svg><use href="#i-folder"/></svg>Open www folder</button></div>
+      <button id="welcome-settings" class="text-button">Website settings</button>
+      <p id="welcome-path" class="path-label"></p>
+      <pre id="welcome-error" class="welcome-error" hidden></pre>
+    </div>
+  </section>
+
+  <section id="settings-page" class="settings-page" aria-label="Settings" hidden>
+    <aside class="settings-sidebar">
+      <h1>Settings</h1>
+      <nav aria-label="Settings categories">
+        <button data-section="appearance" class="selected"><svg><use href="#i-paint"/></svg><span>Appearance</span></button>
+        <button data-section="website"><svg><use href="#i-globe"/></svg><span>Website</span></button>
+        <button data-section="startup"><svg><use href="#i-power"/></svg><span>On startup</span></button>
+        <button data-section="about"><svg><use href="#i-info"/></svg><span>About Pseudo-Chrome</span></button>
+      </nav>
+    </aside>
+    <div class="settings-body">
+      <div class="settings-search"><svg><use href="#i-search"/></svg><input id="settings-search" type="search" placeholder="Search settings" aria-label="Search settings" autocomplete="off"></div>
+      <div id="settings-scroll" class="settings-scroll">
+        <div id="settings-no-results" class="empty-search" hidden>No matching settings.</div>
+        <section class="settings-section" id="section-appearance" data-keywords="appearance theme color light dark system zoom profile name avatar picture icon">
+          <h2>Appearance</h2>
+          <div class="settings-card">
+            <form id="profile-name-form" class="profile-name-setting" novalidate>
+              <label for="profile-name">Profile name</label>
+              <p id="profile-name-help">The name shown in your profile menu.</p>
+              <div class="profile-name-controls"><input id="profile-name" name="profileName" type="text" maxlength="64" required autocomplete="off" spellcheck="false" aria-describedby="profile-name-help profile-name-status" value="Your Pseudo-Chrome"><button id="profile-name-save" class="button compact" type="submit">Save</button></div>
+              <p id="profile-name-status" class="profile-name-status" role="status" aria-live="polite"></p>
+            </form>
+            <div class="setting-row"><div><label for="theme-select">Theme</label><p>Use your system theme or choose an appearance.</p></div><select id="theme-select"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></div>
+            <div class="theme-preview" aria-hidden="true"><div class="mini-browser"><div class="mini-tabs"><span></span></div><div class="mini-toolbar"><span></span></div><div class="mini-content"><img src="../assets/icon.svg" alt=""></div></div><span>Website content keeps its own styling.</span></div>
+            <div class="profile-setting">
+              <span id="profile-label">Profile picture</span>
+              <p id="profile-help">Choose the picture shown in the toolbar.</p>
+              <div id="profile-choices" class="profile-choices" role="radiogroup" aria-labelledby="profile-label" aria-describedby="profile-help">
+                <label class="profile-choice"><input type="radio" name="profileAvatar" value="default" checked><span class="profile-choice-content"><span class="profile-choice-portrait"><svg aria-hidden="true"><use href="#i-person"/></svg></span><span class="profile-choice-name">Default</span></span></label>
+                <label class="profile-choice"><input type="radio" name="profileAvatar" value="spaceship"><span class="profile-choice-content"><span class="profile-choice-portrait"><img src="../assets/profiles/spaceship.png" alt=""></span><span class="profile-choice-name">Spaceship</span></span></label>
+                <label class="profile-choice"><input type="radio" name="profileAvatar" value="swept-hair"><span class="profile-choice-content"><span class="profile-choice-portrait"><img src="../assets/profiles/swept-hair.png" alt=""></span><span class="profile-choice-name">Swept hair</span></span></label>
+                <label class="profile-choice"><input type="radio" name="profileAvatar" value="blue-shirt"><span class="profile-choice-content"><span class="profile-choice-portrait"><img src="../assets/profiles/blue-shirt.png" alt=""></span><span class="profile-choice-name">Blue shirt</span></span></label>
+                <label class="profile-choice"><input type="radio" name="profileAvatar" value="alpine-castle"><span class="profile-choice-content"><span class="profile-choice-portrait"><img src="../assets/profiles/alpine-castle.png" alt=""></span><span class="profile-choice-name">Alpine castle</span></span></label>
+              </div>
+            </div>
+            <div class="setting-row"><div><span>Page zoom</span><p>Adjust the active website tab.</p></div><div class="zoom-control"><button type="button" id="zoom-out" aria-label="Zoom out"><svg aria-hidden="true"><use href="#i-minus"/></svg></button><span id="settings-zoom">100%</span><button type="button" id="zoom-in" aria-label="Zoom in"><svg aria-hidden="true"><use href="#i-plus"/></svg></button><button type="button" id="zoom-reset" class="zoom-reset">Reset</button></div></div>
+          </div>
+        </section>
+
+        <section class="settings-section" id="section-website" data-keywords="website www folder server local host nginx node php native react configuration root startup command arguments environment port log" hidden>
+          <h2>Website</h2>
+          <div class="settings-card">
+            <div class="setting-row folder-row"><div><span>Website folder</span><p id="www-path" class="copyable-path"></p></div><button class="button compact" data-command="openWww">Open folder</button></div>
+            <div class="setting-row"><div><span id="external-programs-label">Allow other apps on this computer to access the website</span><p id="external-programs-help">Other apps can open the local address when enabled. Access from other computers stays disabled.</p></div><button id="allow-external-programs" type="button" class="app-switch" role="switch" aria-checked="false" aria-labelledby="external-programs-label" aria-describedby="external-programs-help"><span></span></button></div><p id="demo-config-summary" class="demo-config-summary" hidden></p><div class="setting-row"><div><span id="host-status-label">Local server</span><p id="host-status-detail">Not started</p></div><button id="restart-site" class="button compact">Restart website</button></div>
+          </div>
+          <form id="site-form" class="settings-card form-card">
+            <div class="field"><label for="site-mode">Website type</label><select id="site-mode" name="mode"><option value="auto">Detect automatically</option><option value="static">Static / built frontend</option><option value="node">Node.js application</option><option value="php">PHP</option><option value="native">Compiled backend</option></select><p>Use a compiled Windows or Linux executable for C++ and Rust backends.</p></div>
+            <div class="field"><label for="site-document-root">Document root</label><input id="site-document-root" name="documentRoot" value="." placeholder="."><p>Relative to www. For example: . for the website root, dist for a built frontend, or public for a public directory.</p></div>
+            <div class="field"><label for="site-entry">Application entry</label><input id="site-entry" name="entry" placeholder="Automatic"><p>Optional path inside www, such as server.js or bin/server.exe. An entry takes precedence over an npm script.</p></div>
+            <div class="field"><label for="site-npm-script">npm script</label><input id="site-npm-script" name="npmScript" placeholder="start"><p>Used for Node.js projects with a package.json start script. Project dependencies must be present.</p></div>
+            <label class="check-row"><input id="site-spa" name="spa" type="checkbox"><span>Single-page application routing<small>Serve index.html for routes that do not match a file.</small></span></label>
+            <details class="advanced-settings"><summary>Advanced configuration</summary><div class="advanced-fields">
+              <div class="field"><label for="site-args">Arguments</label><textarea id="site-args" name="args" rows="3" spellcheck="false" placeholder='["--example", "value"]'>[]</textarea><p>JSON array of strings, passed directly to the backend.</p></div>
+              <div class="field"><label for="site-env">Environment variables</label><textarea id="site-env" name="env" rows="4" spellcheck="false" placeholder='{"NODE_ENV": "production"}'>{}</textarea><p>JSON object with string values. Saved locally in site.json; do not include secrets when sharing that file.</p></div>
+              <div class="field-pair"><div class="field"><label for="site-port">Website port</label><input id="site-port" name="port" type="number" min="0" max="65535" step="1" value="0"><p>0 selects an available port.</p></div><div class="field"><label for="site-backend-port">Backend port</label><input id="site-backend-port" name="backendPort" type="number" min="0" max="65535" step="1" value="0"><p>0 selects an available port.</p></div></div>
+              <div class="field"><label for="site-timeout">Startup timeout (seconds)</label><input id="site-timeout" name="startupTimeout" type="number" min="1" max="180" step="1" value="30"></div>
+            </div></details>
+            <div id="site-form-error" class="form-error" role="alert" hidden></div>
+            <div class="form-actions"><span id="site-save-status" class="save-status" aria-live="polite"></span><button type="submit" id="save-site" class="button primary">Save and restart</button></div>
+          </form>
+          <div class="settings-card log-card"><details id="log-details"><summary>Server log</summary><pre id="server-log" tabindex="0">No log entries yet.</pre><div class="log-actions"><button class="text-button" data-command="copyLog">Copy log</button><button class="text-button" data-command="openConfig">Open configuration folder</button></div></details></div>
+        </section>
+
+        <section class="settings-section" id="section-startup" data-keywords="startup start home page address url restore window position size" hidden>
+          <h2>On startup</h2>
+          <form id="startup-form" class="settings-card form-card">
+            <div class="field"><label for="startup-url">Start page</label><input id="startup-url" placeholder="/"><p>A path within your local website. Use / for its home page.</p></div>
+            <label class="check-row"><input id="restore-window" type="checkbox" checked><span>Remember window size and position<small>Restore the previous window layout when Pseudo-Chrome starts.</small></span></label>
+            <div class="form-actions"><span id="startup-save-status" class="save-status" aria-live="polite"></span><button type="submit" class="button primary">Save</button></div>
+          </form>
+        </section>
+
+        <section class="settings-section" id="section-about" data-keywords="about version help pseudo chrome license local privacy" hidden>
+          <h2>About Pseudo-Chrome</h2>
+          <div class="settings-card about-card"><img src="../assets/icon.svg" alt=""><div><h3>Pseudo-Chrome</h3><p id="app-version">Version 1.0.0</p><p>A local website demonstration utility.</p><p>Licensed under GNU AGPLv3.</p></div></div>
+          <div class="settings-card info-card"><p>Pseudo-Chrome presents a single local website with browser-style tabs and controls. Images, fonts, scripts and API requests may load from the internet when your website uses them.</p><p>General web browsing is disabled. Your website and its settings are stored on this computer.</p><p>Website-specific runtimes, databases and server rules must match the application you are demonstrating. Pseudo-Chrome does not compile backend source code.</p></div>
+          <div class="settings-card"><div class="setting-row"><div><span>Developer tools</span><p>Inspect the active website.</p></div><button class="button compact" data-command="openDevTools">Open</button></div></div>
+        </section>
+      </div>
+    </div>
+  </section>
+</main>
+<div id="popup-layer" class="popup-layer" hidden>
+  <div id="popup-backdrop" class="popup-backdrop" aria-hidden="true"></div>
+  <section id="main-menu" class="chrome-popup main-menu" role="menu" aria-label="Customize and control Pseudo-Chrome" hidden>
+    <div class="menu-group">
+      <button type="button" class="menu-item" role="menuitem" data-popup-command="newTab"><svg><use href="#i-tab"/></svg><span>New tab</span><kbd>Ctrl+T</kbd></button>
+    </div>
+    <div class="menu-group menu-profile-group">
+      <button type="button" id="menu-profile" class="menu-item menu-profile" role="menuitem"><span id="menu-profile-avatar" class="menu-profile-avatar"></span><span id="menu-profile-name">Your Pseudo-Chrome</span><svg class="menu-chevron"><use href="#i-chevron"/></svg></button>
+    </div>
+    <div class="menu-group">
+      <button type="button" id="menu-back" class="menu-item" role="menuitem" data-popup-command="back"><svg><use href="#i-back"/></svg><span>Back</span><kbd>Alt+Left</kbd></button>
+      <button type="button" id="menu-forward" class="menu-item" role="menuitem" data-popup-command="forward"><svg><use href="#i-forward"/></svg><span>Forward</span><kbd>Alt+Right</kbd></button>
+      <button type="button" id="menu-reload" class="menu-item" role="menuitem" data-popup-command="reload"><svg><use href="#i-reload"/></svg><span>Reload</span><kbd>Ctrl+R</kbd></button>
+    </div>
+    <div class="menu-group menu-zoom-row" role="group" aria-label="Page zoom">
+      <svg class="icon"><use href="#i-search"/></svg><span>Zoom</span>
+      <div class="menu-zoom-controls">
+        <button type="button" id="menu-zoom-out" role="menuitem" aria-label="Zoom out" title="Zoom out"><svg><use href="#i-minus"/></svg></button>
+        <button type="button" id="menu-zoom-reset" role="menuitem" class="menu-zoom-value" aria-label="Reset page zoom" title="Reset page zoom">100%</button>
+        <button type="button" id="menu-zoom-in" role="menuitem" aria-label="Zoom in" title="Zoom in"><svg><use href="#i-plus"/></svg></button>
+        <span class="zoom-divider" aria-hidden="true"></span>
+        <button type="button" id="menu-fullscreen" role="menuitem" aria-label="Enter full screen" title="Full screen (F11)"><svg><use href="#i-fullscreen"/></svg></button>
+      </div>
+    </div>
+    <div class="menu-group">
+      <button type="button" id="menu-print" class="menu-item" role="menuitem" data-popup-command="print"><svg><use href="#i-print"/></svg><span>Print…</span><kbd>Ctrl+P</kbd></button>
+      <button type="button" id="menu-devtools" class="menu-item" role="menuitem" data-popup-command="openDevTools"><svg><use href="#i-code"/></svg><span>Developer tools</span><kbd>F12</kbd></button>
+      <button type="button" class="menu-item" role="menuitem" data-popup-command="openWww"><svg><use href="#i-folder"/></svg><span>Open www folder</span></button>
+      <button type="button" id="menu-restart" class="menu-item" role="menuitem" data-popup-command="restartSite"><svg><use href="#i-reload"/></svg><span>Restart website</span></button>
+      <button type="button" class="menu-item" role="menuitem" data-popup-command="clearSiteData"><svg><use href="#i-trash"/></svg><span>Clear website data…</span></button>
+    </div>
+    <div class="menu-group">
+      <button type="button" class="menu-item" role="menuitem" data-popup-route="pseudo://settings"><svg><use href="#i-settings"/></svg><span>Settings</span></button>
+      <button type="button" class="menu-item" role="menuitem" data-popup-route="pseudo://about"><svg><use href="#i-info"/></svg><span>About Pseudo-Chrome</span></button>
+      <button type="button" id="menu-exit" class="menu-item" role="menuitem"><svg><use href="#i-exit"/></svg><span>Exit</span></button>
+    </div>
+  </section>
+  <section id="tab-search-panel" class="chrome-popup tab-search-panel" role="dialog" aria-label="Search tabs" hidden>
+    <div class="tab-search-field"><svg class="icon"><use href="#i-search"/></svg><input id="tab-search-input" type="search" aria-label="Search open tabs" placeholder="Search tabs" autocomplete="off" spellcheck="false"><kbd>Ctrl+Shift+A</kbd></div>
+    <h2>Open Tabs</h2>
+    <div id="tab-search-results" class="tab-search-results" role="list" aria-label="Open tabs"></div>
+    <p id="tab-search-empty" class="tab-search-empty" role="status" hidden>No matching tabs</p>
+  </section>
+  <section id="profile-panel" class="chrome-popup profile-panel" role="dialog" aria-label="Local demo profile" hidden>
+    <div class="profile-hero">
+      <div id="profile-popup-avatar" class="profile-popup-avatar"></div>
+      <h2 id="profile-popup-name">Your Pseudo-Chrome</h2>
+      <p>Local demo profile</p>
+      <button type="button" class="button primary" data-popup-route="pseudo://settings/appearance">Customize profile</button>
+    </div>
+    <div class="menu-group">
+      <button type="button" class="menu-item" data-popup-route="pseudo://settings/appearance"><svg><use href="#i-paint"/></svg><span>Appearance</span></button>
+      <button type="button" class="menu-item" data-popup-route="pseudo://settings/website"><svg><use href="#i-globe"/></svg><span>Website settings</span></button>
+    </div>
+    <div class="menu-group"><button type="button" class="menu-item" data-popup-command="openWww"><svg><use href="#i-folder"/></svg><span>Open www folder</span></button></div>
+  </section>
+  <section id="site-panel" class="chrome-popup site-panel" role="dialog" aria-labelledby="site-title" hidden>
+    <header class="site-popup-header"><button id="site-back" type="button" class="popup-close" aria-label="Back to site information" hidden><svg><use href="#i-back"/></svg></button><h2 id="site-title">Local website</h2><button id="site-close" type="button" class="popup-close" aria-label="Close site information"><svg><use href="#i-close"/></svg></button></header>
+    <div id="site-overview">
+      <button id="site-connection" type="button" class="site-action-row"><svg><use href="#i-computer"/></svg><span>Local connection</span><svg class="site-chevron"><use href="#i-chevron"/></svg></button>
+      <div class="site-permissions"><div id="site-permission-rows"></div><p id="site-permission-empty" class="site-permission-empty" hidden>This site has not requested any permissions.</p><button id="reset-site-permissions" type="button" class="site-reset">Reset permissions</button><p class="site-permission-help">Blocking or resetting permissions reloads the website.</p></div>
+      <div class="site-footer"><button id="site-cookies" type="button" class="site-action-row"><svg><use href="#i-cookie"/></svg><span>Cookies and site data</span><svg class="site-chevron"><use href="#i-chevron"/></svg></button><button id="site-settings" type="button" class="site-action-row" data-popup-route="pseudo://settings/website"><svg><use href="#i-settings"/></svg><span>Site settings</span><svg class="site-chevron"><use href="#i-external"/></svg></button></div>
+    </div>
+    <div id="site-connection-details" class="site-detail" hidden><svg class="icon"><use href="#i-computer"/></svg><h3>Hosted on your computer</h3><p>This website uses a local HTTP connection. It is served by Pseudo-Chrome on this computer.</p><p id="site-origin" class="site-origin"></p><p>Images, scripts and other resources may still load from the internet when the website requests them.</p></div>
+    <div id="site-cookie-details" class="site-detail" hidden><svg class="icon"><use href="#i-cookie"/></svg><h3>Cookies and site data</h3><p>The local website can store cookies and browser data on this computer.</p><p>Deleting this data removes saved site sessions, cache and local storage. Your website files are kept.</p><button id="site-clear-data" type="button" class="site-reset" data-popup-command="clearSiteData">Delete site data…</button></div>
+  </section>
+  <section id="permission-panel" class="chrome-popup permission-panel" role="dialog" aria-modal="true" aria-labelledby="permission-title" hidden>
+    <header class="permission-header"><h2 id="permission-title">This website wants to</h2><button id="permission-close" type="button" class="popup-close" aria-label="Dismiss permission request"><svg><use href="#i-close"/></svg></button></header>
+    <div id="permission-items" class="permission-items"></div>
+    <div id="permission-preview" class="permission-preview" data-preview-state="idle" hidden>
+      <div id="camera-preview-card" class="media-preview-card camera-preview-card" hidden><div class="media-preview-picture"><video id="media-preview-video" muted autoplay playsinline aria-label="Live camera preview"></video><div id="camera-preview-placeholder" class="camera-preview-placeholder"><svg><use href="#i-camera"/></svg><span>Camera preview</span></div><span id="camera-preview-live" class="media-preview-live" hidden><svg><use href="#i-camera"/></svg>Preview</span></div><label class="media-device-label" for="media-preview-camera">Preview camera</label><select id="media-preview-camera" aria-label="Preview camera" disabled><option value="">Default camera</option></select></div>
+      <div id="microphone-preview-card" class="media-preview-card microphone-preview-card" hidden><div class="microphone-meter-row"><svg><use href="#i-microphone"/></svg><div id="media-preview-level" class="microphone-meter" role="meter" aria-label="Microphone input level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="media-preview-level-fill"></span></div></div><label class="media-device-label" for="media-preview-microphone">Preview microphone</label><select id="media-preview-microphone" aria-label="Preview microphone" disabled><option value="">Default microphone</option></select></div>
+      <p id="media-preview-status" role="status" aria-live="polite" hidden></p>
+    </div>
+    <div id="permission-simple-actions" class="permission-actions"><button id="permission-allow" type="button" data-permission-decision="allow">Allow</button><button id="permission-block" type="button" data-permission-decision="block">Block</button></div>
+    <div id="permission-media-actions" class="permission-actions permission-media-actions" hidden><button id="permission-allow-session" type="button" data-permission-decision="allow-session">Allow while visiting the site</button><button id="permission-allow-once" type="button" data-permission-decision="allow-once">Allow this time</button><button id="permission-never" type="button" data-permission-decision="block">Never allow</button></div>
+  </section>
+</div>
+<div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+<script src="renderer.js"></script>
+</body>
+</html>

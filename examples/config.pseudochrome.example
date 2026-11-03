@@ -1,0 +1,10 @@
+# Copy this file to the root of www and name it config.pseudochrome.
+# Restart the website after editing. These settings override the matching
+# app hosting setting only while this file is present.
+
+# Display-only hostname. No scheme, path, credentials, or port.
+# This does not change DNS, TLS, cookies, or the website's real local origin.
+SIMULATED_DOMAINNAME=demo.example
+
+# Actual public HTTP port. 0 means automatic; omit to use Website settings.
+PORT=43881
